@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="bg-white p-8 rounded-xl shadow-2xl max-w-2xl mx-auto">
+  <h2 class="text-2xl font-extrabold text-gray-700 mb-4">Question <span class="text-indigo-600">{{ index }}</span> / {{ total }}</h2>
+  
+  <div class="bg-indigo-50 p-6 rounded-lg border-l-4 border-indigo-500 mb-6">
+    <p class="text-xl font-semibold text-gray-800">{{ question.text }}</p>
+  </div>
+  
+  <form method="post" class="space-y-4">
+    <input type="hidden" name="qid" value="{{ question.id }}" />
+    
+    <div>
+      <label for="answer" class="block text-sm font-medium text-gray-700 mb-1">Your Descriptive Answer:</label>
+      <textarea id="answer" name="answer" rows="8" required 
+                class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150" 
+                placeholder="Write your descriptive answer here..."></textarea>
+    </div>
+    
+    <div class="pt-4">
+      <button type="submit" class="w-full sm:w-auto px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300">
+        Submit & Next
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

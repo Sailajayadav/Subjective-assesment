@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow-xl">
+  <h2 class="text-3xl font-extrabold text-gray-800 mb-4 border-b pb-2">Dashboard — {{ user.name }}</h2>
+  <h3 class="text-2xl font-semibold text-gray-700 mt-6 mb-4">Your Test Results</h3>
+  
+  <ul class="space-y-4">
+    {# The key change is here: sorting 'results' by 'timestamp' in reverse (descending) order #}
+    {% for r in results | sort(attribute='timestamp', reverse=True) %}
+      <li class="p-4 bg-gray-50 rounded-lg border border-gray-200 hover:shadow-md transition duration-300 flex justify-between items-center">
+        <div class="flex-grow">
+          <span class="font-bold text-indigo-600">Test: {{ r.test_id }}</span>
+          <span class="ml-4 text-gray-600">Score: <span class="font-extrabold text-xl">{{ r.total_score }}</span></span>
+        </div>
+        <span class="text-sm text-gray-500">{{ r.timestamp }}</span>
+      </li>
+    {% else %}
+      <li class="p-4 text-gray-500 italic bg-gray-100 rounded-lg">No results yet. Start a test today!</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

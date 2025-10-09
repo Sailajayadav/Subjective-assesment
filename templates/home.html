@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow-xl">
+  <h1 class="text-3xl font-extrabold text-gray-800 mb-6">Available Tests</h1>
+  
+  <ul class="space-y-4">
+    {% for t in tests %}
+      <li class="p-5 bg-gray-50 rounded-lg border border-gray-200 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center hover:bg-gray-100 transition duration-300">
+        <div class="mb-2 sm:mb-0">
+          <strong class="text-xl font-semibold text-indigo-700">{{ t.title }}</strong>
+          <p class="text-gray-600 mt-1">{{ t.description or 'No description provided.' }}</p>
+        </div>
+        <a href="{{ url_for('test.start', test_id=t.id) }}" class="px-4 py-2 bg-green-500 text-white font-medium rounded-md shadow-md hover:bg-green-600 transition duration-300 whitespace-nowrap">
+          Take test
+        </a>
+      </li>
+    {% else %}
+      <li class="p-4 text-gray-500 italic bg-gray-100 rounded-lg">No tests available yet. Please check back later!</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

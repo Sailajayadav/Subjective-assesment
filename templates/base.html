@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>{{ title or "Assessment" }}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <nav class="bg-white shadow-md p-4 flex justify-between items-center">
+    <a href="{{ url_for('home') }}" class="text-xl font-bold text-indigo-600 hover:text-indigo-800 transition duration-300">Assessment Platform</a>
+    <div class="flex items-center space-x-4">
+      {% if session.user %}
+        <span class="text-gray-600 font-medium">Welcome, {{ session.user.name }}</span>
+        <a href="{{ url_for('test.dashboard') }}" class="text-gray-600 hover:text-indigo-600 font-medium transition duration-300">Dashboard</a>
+        <a href="{{ url_for('auth.logout') }}" class="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300">Logout</a>
+      {% else %}
+        <a href="{{ url_for('auth.login') }}" class="text-gray-600 hover:text-indigo-600 font-medium transition duration-300">Login</a>
+        <a href="{{ url_for('auth.signup') }}" class="px-3 py-1 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-300">Signup</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <main class="container mx-auto mt-8 p-4">
+    {# Flash Messages with Tailwind classes #}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="mb-6 space-y-2">
+        {% for category, msg in messages %}
+          {% set color_class = 'bg-green-100 border-green-400 text-green-700' if category == 'success' else 'bg-red-100 border-red-400 text-red-700' %}
+          <li class="{{ color_class }} border-l-4 p-4 rounded-md font-medium" role="alert">
+            {{ msg }}
+          </li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

@@ -1,0 +1,18 @@
+# Use lightweight Python image
+FROM python:3.10-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy and install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the application files
+COPY . .
+
+# Expose the dynamic port from Hugging Face
+EXPOSE $PORT
+
+# Run using Gunicorn (bind to Hugging Face port)
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:7860 app:app --log-level debug --access-logfile - --error-logfile -"]
